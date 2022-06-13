@@ -7,9 +7,11 @@
         <entry key="app/src/main/res/drawable/bg_gradient.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.124" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_feed.xml" value="0.21999191063037818" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.26855512978374096" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.175933837890625" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.10507246376811594" />
+        <entry key="app/src/main/res/layout/item_post.xml" value="0.33698104637256576" />
         <entry key="app/src/main/res/xml/fileprovider.xml" value="0.10507246376811594" />
       </map>
     </option>

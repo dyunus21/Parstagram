@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivPostImage;
     private Button btnSubmit;
     private Button btnPicture;
+    private Button btnFeed;
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     public String photoFileName = "photo.jpg";
@@ -79,6 +80,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 launchCamera();
+            }
+        });
+        btnFeed = findViewById(R.id.btnFeed);
+        btnFeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToFeed();
             }
         });
 
@@ -161,6 +169,11 @@ public class MainActivity extends AppCompatActivity {
         ParseUser.logOut();
         currentUser = ParseUser.getCurrentUser();
         Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToFeed() {
+        Intent intent = new Intent(MainActivity.this, FeedActivity.class);
         startActivity(intent);
     }
 }
