@@ -7,13 +7,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
-    Button btnLogout;
-    ParseUser currentUser;
+    private ParseUser currentUser;
+    private Button btnLogout;
+    private EditText etDescription;
+    private ImageView ivPostImage;
+    private Button btnSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
                 logoutUser();
             }
         });
+        etDescription = findViewById(R.id.etDescription);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        ivPostImage = findViewById(R.id.ivPostImage);
     }
 
     private void logoutUser() {
