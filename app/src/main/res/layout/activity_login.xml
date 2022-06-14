@@ -13,7 +13,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
-        android:background="#FAFAFA"
+        android:background="#F3F1F1"
         android:ems="10"
         android:hint=" Phone number, username or email"
         android:inputType="textPersonName"
@@ -29,7 +29,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        android:background="#FAFAFA"
+        android:background="#F3F1F1"
         android:ems="10"
         android:hint=" Password"
         android:inputType="textPassword"
@@ -84,6 +84,7 @@
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="50dp"
         android:autoLink="all"
+        android:clickable="true"
         android:text="Sign up"
         android:textColor="#1E88E5"
         android:textSize="16sp"
@@ -104,14 +105,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
-    <ImageView
-        android:id="@+id/ivLogInFacebook"
-        android:layout_width="351dp"
-        android:layout_height="123dp"
-        android:layout_marginTop="20dp"
+    <TextView
+        android:id="@+id/tvOr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="OR"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.683"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
-        app:srcCompat="@drawable/log_in_with_facebook" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+
+    <TextView
+        android:id="@+id/tvFacebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="120dp"
+        android:text="Log in with Facebook"
+        android:textColor="#385185"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvOr" />
+
+    <ImageView
+        android:id="@+id/ivFacebook"
+        android:layout_width="24dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/tvFacebook"
+        app:layout_constraintTop_toBottomOf="@+id/tvOr"
+        app:srcCompat="@drawable/facebook_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
