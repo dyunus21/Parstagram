@@ -15,6 +15,8 @@ public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
+    public int likeCount = 0;
+    public boolean favorited = false;
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -35,6 +37,14 @@ public class Post extends ParseObject {
     }
     public void setUser(ParseUser user) {
         put(KEY_USER,user);
+    }
+
+    public String getLikeCount() {
+        return likeCount + " likes";
+    }
+
+    public boolean isFavorited() {
+        return favorited;
     }
 
     public static String calculateTimeAgo(Date createdAt) {
