@@ -1,16 +1,21 @@
 package com.example.parstagram;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,7 @@ public class FeedActivity extends AppCompatActivity {
     protected List<Post> mPosts;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
+    MenuItem miActionProgressItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,8 @@ public class FeedActivity extends AppCompatActivity {
     }
 
     private void queryPosts() {
+        if (miActionProgressItem != null)
+            showProgressBar();
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.setLimit(20);
@@ -76,7 +84,44 @@ public class FeedActivity extends AppCompatActivity {
                 mPosts = posts;
                 adapter.addAll(posts);
                 swipeContainer.setRefreshing(false);
+                hideProgressBar();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.logout) {
+            logoutUser();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        miActionProgressItem.setVisible(false);
+    }
+
+    private void logoutUser() {
+        Log.i(TAG, "Attempting to logout user!");
+        ParseUser.logOut();
+        Intent intent = new Intent(FeedActivity.this,LoginActivity.class);
+        startActivity(intent);
     }
 }
