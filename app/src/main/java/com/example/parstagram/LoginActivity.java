@@ -46,7 +46,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         btnSignup = findViewById(R.id.tvSignup);
-        // TODO: Signup directs to create a new account page
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goRegister();
+            }
+        });
     }
     private void loginUser(String username, String password) {
         Log.i(TAG, "Attempting to login user");
@@ -66,6 +71,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goMainActivity() {
         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goRegister() {
+        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
         startActivity(intent);
         finish();
     }

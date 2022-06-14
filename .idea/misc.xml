@@ -10,7 +10,8 @@
         <entry key="app/src/main/res/layout/activity_feed.xml" value="0.21999191063037818" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.3120274198228035" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.175933837890625" />
-        <entry key="app/src/main/res/layout/activity_post_details.xml" value="0.31474155131409853" />
+        <entry key="app/src/main/res/layout/activity_post_details.xml" value="0.4585152838427948" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.26922302246093754" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.10507246376811594" />
         <entry key="app/src/main/res/layout/item_post.xml" value="0.32176971435546875" />
         <entry key="app/src/main/res/xml/fileprovider.xml" value="0.10507246376811594" />

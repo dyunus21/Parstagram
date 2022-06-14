@@ -26,14 +26,16 @@
         android:theme="@style/Theme.Parstagram"
         tools:targetApi="31">
         <activity
-            android:name=".PostDetailsActivity"
+            android:name=".RegisterActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
+            android:name=".PostDetailsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name=".FeedActivity"
-            android:exported="false"/>
-<!--            android:theme="@style/FeedTheme"/>-->
-
+            android:exported="false" /> <!-- android:theme="@style/FeedTheme"/> -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.fileprovider"
