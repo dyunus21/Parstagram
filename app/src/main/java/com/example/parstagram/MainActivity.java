@@ -115,16 +115,9 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-//                Uri takenPhotoUri = Uri.fromFile(getPhotoFileUri(photoFileName));
-// by this point we have the camera photo on disk
-//                Bitmap rawTakenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
-// See BitmapScaler.java: https://gist.github.com/nesquena/3885707fd3773c09f1bb
-                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, 400);
-                // Configure byte output stream
+                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, 800);
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-// Compress the image further
                 resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-// Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
                 File resizedFile = getPhotoFileUri(photoFileName + "_resized");
                 try {
                     resizedFile.createNewFile();
@@ -137,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-// Write the bytes of the bitmap to file
                 try {
                     fos.write(bytes.toByteArray());
                 } catch (IOException e) {

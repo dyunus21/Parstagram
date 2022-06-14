@@ -1,6 +1,9 @@
 package com.example.parstagram;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcel;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -47,32 +53,47 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    // Add a list of items -- change to type used
     public void addAll(List<Post> list) {
         posts.addAll(list);
         notifyDataSetChanged();
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView tvUsername;
         private TextView tvDescription;
         private ImageView ivImage;
+        private Post currentPost;
+        private TextView tvTimestamp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             ivImage = itemView.findViewById(R.id.ivImage);
+            tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Post post) {
+            currentPost = post;
             tvUsername.setText(post.getUser().getUsername());
-            tvDescription.setText(post.getDescription());
+            String sourceString = "<b>" + post.getUser().getUsername() + "</b> " + post.getDescription();
+            tvDescription.setText(Html.fromHtml(sourceString));
             ParseFile image = post.getImage();
             if(image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivImage);
             }
+            tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, PostDetailsActivity.class);
+            intent.putExtra(Post.class.getSimpleName(), currentPost);
+            context.startActivity(intent);
         }
     }
+
+
 }
