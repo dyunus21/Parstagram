@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="0dp"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvTimestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDescription"
         tools:text="Timestamp" />
@@ -19,7 +21,7 @@
         android:id="@+id/ivMore"
         android:layout_width="6dp"
         android:layout_height="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="15dp"
         android:contentDescription="More"
@@ -32,6 +34,8 @@
         android:id="@+id/ivProfileImage"
         android:layout_width="22dp"
         android:layout_height="21dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="Profile Image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,6 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -65,17 +70,18 @@
         android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:textColor="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@+id/ibDirect"
-        tools:layout_editor_absoluteX="89dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLikes"
         tools:text="Description ..." />
 
     <ImageButton
         android:id="@+id/ibHeart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,5 +124,19 @@
         app:layout_constraintTop_toBottomOf="@+id/ivImage"
         app:srcCompat="@drawable/ufi_save"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/tvLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="10,000 likes"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibComment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
