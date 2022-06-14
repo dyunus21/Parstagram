@@ -26,7 +26,8 @@ import java.util.List;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
     private Context context;
     private List<Post> posts;
-    public ItemPostBinding binding;
+    private ItemPostBinding item_binding;
+
 
     public PostsAdapter(Context context, List<Post> posts) {
         this.context = context;
@@ -36,9 +37,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = ItemPostBinding.inflate(LayoutInflater.from(context), parent, false);
-        View view = binding.getRoot();
-        return new ViewHolder(view);
+        item_binding = ItemPostBinding.inflate(LayoutInflater.from(context), parent, false);
+        return new ViewHolder(item_binding);
     }
 
     @Override
@@ -65,10 +65,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Post currentPost;
+        public ItemPostBinding binding;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(this);
+        public ViewHolder(@NonNull ItemPostBinding itemView) {
+            super(itemView.getRoot());
+            itemView.getRoot().setOnClickListener(this);
+            this.binding = itemView;
         }
 
         public void bind(Post post) {
