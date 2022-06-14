@@ -83,14 +83,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 Glide.with(context).load(image.getUrl()).into(binding.ivImage);
             }
             binding.tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
-            binding.tvLikes.setText(post.getLikeCount());
+            binding.tvLikes.setText(post.getLikeCount() + " likes");
 
             binding.ibHeart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
-                    post.likeCount += 1;
-                    binding.tvLikes.setText(post.getLikeCount());
+                    post.setLikecount(1);
+                    binding.tvLikes.setText(post.getLikeCount() + " likes");
                 }
             });
         }

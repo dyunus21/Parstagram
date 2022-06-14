@@ -15,7 +15,8 @@ public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
-    public int likeCount = 0;
+    public static final String KEY_LIKECOUNT = "likeCount";
+//    public int likeCount = 0;
     public boolean favorited = false;
 
     public String getDescription() {
@@ -39,10 +40,12 @@ public class Post extends ParseObject {
         put(KEY_USER,user);
     }
 
-    public String getLikeCount() {
-        return likeCount + " likes";
+    public int getLikeCount() {
+        return getInt(KEY_LIKECOUNT);
     }
-
+    public void setLikecount(int likeCount) {
+        put(KEY_LIKECOUNT,getLikeCount() + likeCount);
+    }
     public boolean isFavorited() {
         return favorited;
     }

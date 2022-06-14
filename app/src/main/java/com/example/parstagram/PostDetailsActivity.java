@@ -29,5 +29,15 @@ public class PostDetailsActivity extends AppCompatActivity {
         binding.tvCaption.setText(Html.fromHtml(sourceString));
         Glide.with(this).load(post.getImage().getUrl()).into(binding.ivImage);
         binding.tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
+        binding.tvLikes.setText(post.getLikeCount() + " likes");
+
+        binding.ibHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
+                post.setLikecount(1);
+                binding.tvLikes.setText(post.getLikeCount() + " likes");
+            }
+        });
     }
 }
