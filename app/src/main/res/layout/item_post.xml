@@ -22,6 +22,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="15dp"
+        android:contentDescription="More"
         app:layout_constraintBottom_toTopOf="@+id/ivImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,6 +32,7 @@
         android:id="@+id/ivProfileImage"
         android:layout_width="22dp"
         android:layout_height="21dp"
+        android:contentDescription="Profile Image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/instagram_user_filled_24" />
@@ -52,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="15dp"
+        android:contentDescription="Image"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +80,8 @@
         android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivImage"
-        app:srcCompat="@drawable/ufi_heart" />
+        app:srcCompat="@drawable/ufi_heart"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/ibComment"
@@ -88,7 +92,8 @@
         android:background="@color/white"
         app:layout_constraintStart_toEndOf="@+id/ibHeart"
         app:layout_constraintTop_toBottomOf="@+id/ivImage"
-        app:srcCompat="@drawable/ufi_comment" />
+        app:srcCompat="@drawable/ufi_comment"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageButton
         android:id="@+id/ibDirect"
@@ -99,7 +104,8 @@
         android:background="@color/white"
         app:layout_constraintStart_toEndOf="@+id/ibComment"
         app:layout_constraintTop_toBottomOf="@+id/ivImage"
-        app:srcCompat="@drawable/direct" />
+        app:srcCompat="@drawable/direct"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageButton
         android:id="@+id/ibSave"
@@ -110,6 +116,7 @@
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivImage"
-        app:srcCompat="@drawable/ufi_save" />
+        app:srcCompat="@drawable/ufi_save"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
