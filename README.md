@@ -26,7 +26,7 @@ The following **stretch** features are implemented:
 - [x] User can load more posts once he or she reaches the bottom of the feed using endless scrolling.
 - [x] User should switch between different tabs using fragments and a Bottom Navigation View.
     - [ ] Feed Tab (to view all posts from all users)
-    - [ ] Capture Tab (to make a new post using the Camera and Photo Gallery)
+    - [x] Capture Tab (to make a new post using the Camera and Photo Gallery)
     - [ ] Profile Tab (to view only the current user's posts, in a grid)
 - [x] Show the username and creation time for each post
 - User Profiles:
