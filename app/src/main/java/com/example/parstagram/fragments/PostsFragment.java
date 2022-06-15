@@ -11,14 +11,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.parstagram.EndlessRecyclerViewScrollListener;
 import com.example.parstagram.Post;
-import com.example.parstagram.PostsAdapter;
+import com.example.parstagram.adapters.PostsAdapter;
 import com.example.parstagram.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;

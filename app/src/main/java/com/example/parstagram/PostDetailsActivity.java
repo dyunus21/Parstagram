@@ -10,6 +10,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.example.parstagram.databinding.ActivityPostDetailsBinding;
 
+
 public class PostDetailsActivity extends AppCompatActivity {
     public static final String TAG = "PostDetailsActivity";
     private ActivityPostDetailsBinding binding;
