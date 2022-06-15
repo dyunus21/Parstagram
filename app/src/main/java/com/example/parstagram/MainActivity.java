@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.parstagram.fragments.ComposeFragment;
+import com.example.parstagram.fragments.PostsFragment;
+import com.example.parstagram.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_home:
                         Log.i(TAG, "toHomePage");
-                        fragment = new ComposeFragment();
+                        fragment = new PostsFragment();
                         break;
                     case R.id.action_compose:
                         Log.i(TAG, "toComposePage");
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_profile:
                         Log.i(TAG, "toProfilePage");
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment();
                         break;
                     default:
                         return true;
