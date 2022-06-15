@@ -8,17 +8,20 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.Date;
 import java.util.List;
 
 public class ProfileFragment extends PostsFragment{
     private static final String TAG = "PostsFragment";
 
     @Override
-    protected void queryPosts() {
+    protected void queryPosts(Date time) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
-        query.setLimit(20);
+        if(time != null) {
+            Log.i(TAG,"Endless Scroll! on");
+            query.whereLessThan(Post.KEY_CREATED_AT, time);
+        }
         query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<Post>() {
             @Override
@@ -31,8 +34,8 @@ public class ProfileFragment extends PostsFragment{
                     Log.i(TAG, "Post: " + post.getDescription() + " username: " + post.getUser().getUsername());
                 }
                 adapter.clear();
-                allPosts = posts;
-                adapter.addAll(allPosts);
+                allPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
             }
         });
     }

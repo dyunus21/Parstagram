@@ -25,6 +25,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PostsFragment extends Fragment {
@@ -34,7 +35,6 @@ public class PostsFragment extends Fragment {
     protected List<Post> allPosts;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
-    MenuItem miActionProgressItem;
     private static final String TAG = "PostsFragment";
 
     public PostsFragment() {
@@ -66,10 +66,10 @@ public class PostsFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                queryPosts();
+                queryPosts(null);
             }
         });
-        queryPosts();
+        queryPosts(null);
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -77,18 +77,24 @@ public class PostsFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                queryPosts();
+                Log.i(TAG, "Since time: " + "post: " + allPosts.get(0).getDescription() + " " + allPosts.get(0).getCreatedAt());
+                queryPosts(allPosts.get(0).getCreatedAt());
             }
         };
         rvPosts.addOnScrollListener(scrollListener);
     }
 
-    protected void queryPosts() {
+    protected void queryPosts(Date time) {
 //        if (miActionProgressItem != null)
 //            showProgressBar();
+
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.setLimit(20);
+        if(time != null) {
+            Log.i(TAG,"Endless Scroll! on");
+            query.whereLessThan(Post.KEY_CREATED_AT, time);
+        }
         query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<Post>() {
             @Override
@@ -101,42 +107,14 @@ public class PostsFragment extends Fragment {
                     Log.i(TAG, "Post: " + post.getDescription() + " username: " + post.getUser().getUsername());
                 }
                 adapter.clear();
-                allPosts = posts;
-                adapter.addAll(posts);
+                allPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
+                rvPosts.scrollToPosition(0);
                 swipeContainer.setRefreshing(false);
 //                hideProgressBar();
             }
         });
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-////        if (item.getItemId() == R.id.logout) {
-////            logoutUser();
-////            return true;
-////        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        miActionProgressItem = menu.findItem(R.id.miActionProgress);
-//        return super.onPrepareOptionsMenu(menu);
-//    }
-//
-//
-//    public void showProgressBar() {
-//        miActionProgressItem.setVisible(true);
-//    }
-//
-//    public void hideProgressBar() {
-//        miActionProgressItem.setVisible(false);
-//    }
 
 }
