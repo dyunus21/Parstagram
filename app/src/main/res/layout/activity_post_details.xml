@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostDetailsActivity">
+    tools:context=".activities.PostDetailsActivity">
 
     <TextView
         android:id="@+id/tvLikes"
@@ -147,8 +147,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvComments"
-        android:layout_width="61dp"
-        android:layout_height="228dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"

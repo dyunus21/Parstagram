@@ -1,4 +1,4 @@
-package com.example.parstagram;
+package com.example.parstagram.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.parstagram.R;
 import com.example.parstagram.fragments.ComposeFragment;
 import com.example.parstagram.fragments.PostsFragment;
 import com.example.parstagram.fragments.ProfileFragment;

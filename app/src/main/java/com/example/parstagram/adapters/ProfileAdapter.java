@@ -10,10 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.parstagram.Post;
-import com.example.parstagram.PostDetailsActivity;
+import com.example.parstagram.models.Post;
+import com.example.parstagram.activities.PostDetailsActivity;
 import com.example.parstagram.databinding.ItemCardBinding;
-import com.example.parstagram.databinding.ItemPostBinding;
 import com.parse.ParseFile;
 
 import java.util.List;

@@ -26,14 +26,17 @@
         android:theme="@style/Theme.Parstagram"
         tools:targetApi="31">
         <activity
-            android:name=".RegisterActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity
-            android:name=".PostDetailsActivity"
+            android:name=".activities.CommentActivity"
             android:exported="false" />
         <activity
-            android:name=".FeedActivity"
+            android:name=".activities.RegisterActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activities.PostDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".models.FeedActivity"
             android:exported="false" /> <!-- android:theme="@style/FeedTheme"/> -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -46,15 +49,14 @@
         </provider>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".activities.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>

@@ -3,6 +3,7 @@ package com.example.parstagram.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.parstagram.Post;
-import com.example.parstagram.PostDetailsActivity;
+import com.example.parstagram.models.Post;
+import com.example.parstagram.activities.PostDetailsActivity;
 import com.example.parstagram.R;
 import com.example.parstagram.databinding.ItemPostBinding;
 import com.parse.ParseFile;
@@ -20,7 +21,8 @@ import com.parse.ParseFile;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
-    private Context context;
+    private static final String TAG = "PostsAdapter" ;
+    private static Context context;
     private List<Post> posts;
     private ItemPostBinding item_binding;
 
@@ -59,7 +61,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Post currentPost;
         public ItemPostBinding binding;
 
@@ -87,6 +89,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
                     post.setLikecount(1);
                     binding.tvLikes.setText(post.getLikeCount() + " likes");
+                }
+            });
+            binding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Log.i(TAG,"Go to profile page");
+//                    AppCompatActivity appCompatActivity = (AppCompatActivity) v.getcontext();
+//                    FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
+//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                    fragmentTransaction.replace(frameLayout.getId(),fragment);
+//                    fragmentTransaction.commit();
                 }
             });
         }

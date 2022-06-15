@@ -24,17 +24,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.parstagram.BitmapScaler;
-import com.example.parstagram.FeedActivity;
-import com.example.parstagram.LoginActivity;
-import com.example.parstagram.MainActivity;
-import com.example.parstagram.Post;
+import com.example.parstagram.models.BitmapScaler;
+import com.example.parstagram.models.FeedActivity;
+import com.example.parstagram.activities.LoginActivity;
+import com.example.parstagram.models.Post;
 import com.example.parstagram.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -43,7 +39,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 
 public class ComposeFragment extends Fragment {

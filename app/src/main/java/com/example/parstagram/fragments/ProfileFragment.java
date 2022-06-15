@@ -1,6 +1,5 @@
 package com.example.parstagram.fragments;
 
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,8 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.parstagram.Post;
-import com.example.parstagram.adapters.PostsAdapter;
+import com.example.parstagram.models.Post;
 import com.example.parstagram.R;
 import com.example.parstagram.adapters.ProfileAdapter;
 import com.parse.FindCallback;

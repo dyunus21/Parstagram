@@ -1,4 +1,4 @@
-package com.example.parstagram;
+package com.example.parstagram.models;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.parstagram.activities.LoginActivity;
+import com.example.parstagram.R;
 import com.example.parstagram.adapters.PostsAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -123,7 +125,7 @@ public class FeedActivity extends AppCompatActivity {
     private void logoutUser() {
         Log.i(TAG, "Attempting to logout user!");
         ParseUser.logOut();
-        Intent intent = new Intent(FeedActivity.this,LoginActivity.class);
+        Intent intent = new Intent(FeedActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 }
