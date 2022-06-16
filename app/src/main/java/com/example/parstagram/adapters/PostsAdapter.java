@@ -92,7 +92,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 Glide.with(context).load(post.getUser().getParseFile("profileImage").getUrl()).into(binding.ivProfileImage);
             List<ParseUser> likedBy = post.getLikedBy();
             binding.tvLikes.setText(post.getLikeCount());
-            if (likedBy.contains(ParseUser.getCurrentUser())) {
+            if (post.isLikedbyCurrentUser(ParseUser.getCurrentUser())) {
                 binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
             }
             else {
@@ -103,20 +103,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, "Current User: " + ParseUser.getCurrentUser().getObjectId());
-
-
-                    if (likedBy.contains(ParseUser.getCurrentUser())) {
-                        likedBy.remove(ParseUser.getCurrentUser());
-                        post.setLikedBy(likedBy);
+                    if (post.isLikedbyCurrentUser(ParseUser.getCurrentUser())) {
                         binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart);
                     }
                     else {
-                        likedBy.add(ParseUser.getCurrentUser());
-                        post.setLikedBy(likedBy);
                         binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
                     }
+                    post.likePost(ParseUser.getCurrentUser());
 
-                    post.setLikecount(likedBy.size());
                     post.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {

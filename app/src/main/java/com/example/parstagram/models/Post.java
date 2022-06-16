@@ -17,10 +17,8 @@ public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
-    public static final String KEY_LIKECOUNT = "likeCount";
-    public static final String KEY_LIKED_BY = "likedBy";
-//    public int likeCount = 0;
-//    public boolean favorited = false;
+    public static final String KEY_LIKED_BY = "likedby";
+
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -46,9 +44,6 @@ public class Post extends ParseObject {
     public String getLikeCount() {
         return getLikedBy().size() + " likes";
     }
-    public void setLikecount(int likeCount) {
-        put(KEY_LIKECOUNT,likeCount);
-    }
 
     public List<ParseUser> getLikedBy() {
         List<ParseUser> likedBy = getList(KEY_LIKED_BY);
@@ -62,13 +57,28 @@ public class Post extends ParseObject {
 
     public boolean isLikedbyCurrentUser(ParseUser currentUser) {
         for (ParseUser user : getLikedBy()) {
-            if (currentUser.getObjectId() == user.getObjectId()) {
+            if (currentUser.hasSameId(user)) {
                 Log.i("Post", "Post is already liked by " + currentUser.getUsername());
                 return true;
             }
         }
         Log.i("Post", "Post has not been liked by " + currentUser.getUsername());
         return false;
+    }
+
+    public void likePost(ParseUser currentUser) {
+        List<ParseUser> likedBy = getLikedBy();
+        for (int i = 0; i<likedBy.size(); i++) {
+            if (likedBy.get(i).hasSameId(currentUser)) {
+                likedBy.remove(i);
+                Log.i("Post", "Size: " + likedBy.size());
+                setLikedBy(likedBy);
+                return;
+            }
+        }
+        likedBy.add(currentUser);
+        setLikedBy(likedBy);
+        return;
     }
 
 
