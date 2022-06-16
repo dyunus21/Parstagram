@@ -59,6 +59,7 @@ public class ProfileFragment extends Fragment {
     private ImageView ivProfileImage;
     private final ParseUser user;
     private Button btnEditProfileImage;
+    private TextView tvPostCount;
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     public String photoFileName = "photo.jpg";
@@ -104,7 +105,7 @@ public class ProfileFragment extends Fragment {
         ivProfileImage = view.findViewById(R.id.ivProfileImage);
 //        Log.i(TAG, "url: " + user.getParseFile("profileImage").getUrl());
         if (user.getParseFile("profileImage") != null)
-            Glide.with(getContext()).load(user.getParseFile("profileImage").getUrl()).into(ivProfileImage);
+            Glide.with(getContext()).load(user.getParseFile("profileImage").getUrl()).circleCrop().into(ivProfileImage);
         btnEditProfileImage = (Button) view.findViewById(R.id.btnEditProfileImage);
         if (Objects.equals(user.getObjectId(), ParseUser.getCurrentUser().getObjectId())) {
             btnEditProfileImage.setVisibility(View.VISIBLE);
@@ -118,7 +119,7 @@ public class ProfileFragment extends Fragment {
                 launchCamera();
             }
         });
-
+        tvPostCount = view.findViewById(R.id.tvPostCount);
         queryPosts(null);
 
     }
@@ -144,6 +145,7 @@ public class ProfileFragment extends Fragment {
                 for (Post post : posts) {
                     Log.i(TAG, "Post: " + post.getDescription() + " username: " + post.getUser().getUsername());
                 }
+                tvPostCount.setText(String.valueOf(posts.size()));
                 adapter.clear();
                 allPosts.addAll(posts);
                 adapter.notifyDataSetChanged();

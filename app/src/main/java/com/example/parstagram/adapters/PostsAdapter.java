@@ -14,11 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.parstagram.databinding.ItemPostBinding;
 import com.example.parstagram.fragments.ProfileFragment;
 import com.example.parstagram.models.Post;
 import com.example.parstagram.activities.PostDetailsActivity;
 import com.example.parstagram.R;
-import com.example.parstagram.databinding.ItemPostBinding;
+
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
