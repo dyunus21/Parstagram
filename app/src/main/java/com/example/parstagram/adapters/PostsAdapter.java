@@ -87,6 +87,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 Glide.with(context).load(image.getUrl()).into(binding.ivImage);
             }
             binding.tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
+            if(post.getUser().getParseFile("profileImage") != null)
+                Glide.with(context).load(post.getUser().getParseFile("profileImage").getUrl()).into(binding.ivProfileImage);
             List<ParseUser> likedBy = post.getLikedBy();
             binding.tvLikes.setText(post.getLikeCount());
             if (likedBy.contains(ParseUser.getCurrentUser())) {
@@ -99,6 +101,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             binding.ibHeart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.i(TAG, "Current User: " + ParseUser.getCurrentUser().getObjectId());
+
 
                     if (likedBy.contains(ParseUser.getCurrentUser())) {
                         likedBy.remove(ParseUser.getCurrentUser());
@@ -110,12 +114,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         post.setLikedBy(likedBy);
                         binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
                     }
+
                     post.setLikecount(likedBy.size());
                     post.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             if(e!=null)
-                                Log.e(TAG,"Error in liking post");
+                                Log.e(TAG,"Error in liking post" + e);
                         }
                     });
                     binding.tvLikes.setText(post.getLikeCount());

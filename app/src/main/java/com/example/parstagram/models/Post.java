@@ -47,7 +47,7 @@ public class Post extends ParseObject {
         return getLikedBy().size() + " likes";
     }
     public void setLikecount(int likeCount) {
-        put(KEY_LIKECOUNT,getLikeCount() + likeCount);
+        put(KEY_LIKECOUNT,likeCount);
     }
 
     public List<ParseUser> getLikedBy() {

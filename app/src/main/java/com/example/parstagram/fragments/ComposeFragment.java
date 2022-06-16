@@ -49,9 +49,8 @@ public class ComposeFragment extends Fragment {
     private Button btnSubmit;
     private Button btnPicture;
     private Button btnFeed;
-
-    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private final static String TAG = "ComposeFragment";
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     public String photoFileName = "photo.jpg";
     File photoFile;
 
@@ -187,16 +186,4 @@ public class ComposeFragment extends Fragment {
         });
     }
 
-    private void logoutUser() {
-        Log.i(TAG, "Attempting to logout user!");
-        ParseUser.logOut();
-        currentUser = ParseUser.getCurrentUser();
-        Intent intent = new Intent(getContext(), LoginActivity.class);
-        startActivity(intent);
-    }
-
-    private void goToFeed() {
-        Intent intent = new Intent(getContext(), FeedActivity.class);
-        startActivity(intent);
-    }
 }

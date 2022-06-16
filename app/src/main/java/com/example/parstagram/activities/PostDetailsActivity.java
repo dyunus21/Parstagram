@@ -47,6 +47,8 @@ public class PostDetailsActivity extends AppCompatActivity {
         binding.tvCaption.setText(Html.fromHtml(sourceString));
         Glide.with(this).load(post.getImage().getUrl()).into(binding.ivImage);
         binding.tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
+        if(post.getUser().getParseFile("profileImage") != null)
+            Glide.with(this).load(post.getUser().getParseFile("profileImage").getUrl()).into(binding.ivProfileImage);
         List<ParseUser> likedBy = post.getLikedBy();
         binding.tvLikes.setText(post.getLikeCount());
         if (likedBy.contains(ParseUser.getCurrentUser())) {
@@ -59,7 +61,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         binding.ibHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.i(TAG, "Current User: " + ParseUser.getCurrentUser().getObjectId());
                 if (likedBy.contains(ParseUser.getCurrentUser())) {
                     likedBy.remove(ParseUser.getCurrentUser());
                     post.setLikedBy(likedBy);
@@ -70,18 +72,18 @@ public class PostDetailsActivity extends AppCompatActivity {
                     post.setLikedBy(likedBy);
                     binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
                 }
+
                 post.setLikecount(likedBy.size());
                 post.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if(e!=null)
-                            Log.e(TAG,"Error in liking post");
+                            Log.e(TAG,"Error in liking post" + e);
                     }
                 });
                 binding.tvLikes.setText(post.getLikeCount());
             }
         });
-
         binding.rvComments.setLayoutManager(new LinearLayoutManager(this));
         commentsAdapter = new CommentsAdapter(this);
         binding.rvComments.setAdapter(commentsAdapter);
