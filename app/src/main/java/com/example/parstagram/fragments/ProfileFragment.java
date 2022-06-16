@@ -102,8 +102,8 @@ public class ProfileFragment extends Fragment {
         Log.i(TAG, "Name: " + user.getString("name"));
         tvName.setText(user.getString("name"));
         ivProfileImage = view.findViewById(R.id.ivProfileImage);
-        Log.i(TAG, "url: " + user.getParseFile("profileImage").getUrl());
-        if (user.getParseFile("profileImage").getUrl() != null)
+//        Log.i(TAG, "url: " + user.getParseFile("profileImage").getUrl());
+        if (user.getParseFile("profileImage") != null)
             Glide.with(getContext()).load(user.getParseFile("profileImage").getUrl()).into(ivProfileImage);
         btnEditProfileImage = (Button) view.findViewById(R.id.btnEditProfileImage);
         if (Objects.equals(user.getObjectId(), ParseUser.getCurrentUser().getObjectId())) {
