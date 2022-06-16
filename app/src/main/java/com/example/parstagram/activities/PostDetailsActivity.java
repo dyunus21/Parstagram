@@ -22,6 +22,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -46,9 +47,8 @@ public class PostDetailsActivity extends AppCompatActivity {
         binding.tvCaption.setText(Html.fromHtml(sourceString));
         Glide.with(this).load(post.getImage().getUrl()).into(binding.ivImage);
         binding.tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
-        binding.tvLikes.setText(post.getLikeCount() + " likes");
-
         List<ParseUser> likedBy = post.getLikedBy();
+        binding.tvLikes.setText(post.getLikeCount());
         if (likedBy.contains(ParseUser.getCurrentUser())) {
             binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
         }
@@ -56,7 +56,7 @@ public class PostDetailsActivity extends AppCompatActivity {
             binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart);
         }
 
-            binding.ibHeart.setOnClickListener(new View.OnClickListener() {
+        binding.ibHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -71,7 +71,13 @@ public class PostDetailsActivity extends AppCompatActivity {
                     binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
                 }
                 post.setLikecount(likedBy.size());
-                post.saveInBackground();
+                post.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e!=null)
+                            Log.e(TAG,"Error in liking post");
+                    }
+                });
                 binding.tvLikes.setText(post.getLikeCount());
             }
         });
@@ -88,13 +94,14 @@ public class PostDetailsActivity extends AppCompatActivity {
             }
         });
         refreshComments();
-
-//        binding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.rlContainer,new ProfileFragment(post.getUser())).commit();
-//            }
-//        });
+        binding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                ProfileFragment profileFragment = new ProfileFragment(post.getUser());
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.rlContainer,profileFragment).commit();
+            }
+        });
     }
 
     @Override

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.parstagram.models.Post;
 import com.example.parstagram.R;
 import com.example.parstagram.adapters.ProfileAdapter;
@@ -72,9 +73,12 @@ public class ProfileFragment extends Fragment {
         Log.i(TAG, gridLayoutManager.toString());
         tvUsername = view.findViewById(R.id.tvUsername);
         tvName = view.findViewById(R.id.tvName);
-        tvUsername.setText(ParseUser.getCurrentUser().getUsername());
-        Log.i(TAG, "Name: " +ParseUser.getCurrentUser().getString("name"));
-        tvName.setText(ParseUser.getCurrentUser().getString("name"));
+        tvUsername.setText(user.getUsername());
+        Log.i(TAG, "Name: " +user.getString("name"));
+        tvName.setText(user.getString("name"));
+        if(user.getParseFile("profileImage")!=null)
+            Glide.with(getContext()).load(user.getParseFile("profileImage").getUrl()).into(ivProfileImage);
+
         queryPosts(null);
 
     }

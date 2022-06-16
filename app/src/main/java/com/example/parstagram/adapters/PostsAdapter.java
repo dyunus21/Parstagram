@@ -1,5 +1,6 @@
 package com.example.parstagram.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
@@ -9,15 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.parstagram.fragments.ProfileFragment;
 import com.example.parstagram.models.Post;
 import com.example.parstagram.activities.PostDetailsActivity;
 import com.example.parstagram.R;
 import com.example.parstagram.databinding.ItemPostBinding;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -84,7 +89,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             binding.tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
             List<ParseUser> likedBy = post.getLikedBy();
             binding.tvLikes.setText(post.getLikeCount());
-            if (isLikedbyCurrentUser()) {
+            if (likedBy.contains(ParseUser.getCurrentUser())) {
                 binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
             }
             else {
@@ -95,7 +100,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
 
-                    if (isLikedbyCurrentUser()) {
+                    if (likedBy.contains(ParseUser.getCurrentUser())) {
                         likedBy.remove(ParseUser.getCurrentUser());
                         post.setLikedBy(likedBy);
                         binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart);
@@ -106,16 +111,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
                     }
                     post.setLikecount(likedBy.size());
-                    post.saveInBackground();
+                    post.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if(e!=null)
+                                Log.e(TAG,"Error in liking post");
+                        }
+                    });
                     binding.tvLikes.setText(post.getLikeCount());
                 }
             });
             binding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Log.i(TAG,"Go to profile page");
-
+                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                    ProfileFragment profileFragment = new ProfileFragment(post.getUser());
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.rlContainer,profileFragment).commit();
                 }
             });
         }

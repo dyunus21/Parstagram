@@ -44,7 +44,7 @@ public class Post extends ParseObject {
     }
 
     public String getLikeCount() {
-        return getInt(KEY_LIKECOUNT) + " likes";
+        return getLikedBy().size() + " likes";
     }
     public void setLikecount(int likeCount) {
         put(KEY_LIKECOUNT,getLikeCount() + likeCount);
@@ -60,8 +60,15 @@ public class Post extends ParseObject {
         put(KEY_LIKED_BY, likedBy);
     }
 
-    private boolean isLikedbyCurrentUser() {
-
+    public boolean isLikedbyCurrentUser(ParseUser currentUser) {
+        for (ParseUser user : getLikedBy()) {
+            if (currentUser.getObjectId() == user.getObjectId()) {
+                Log.i("Post", "Post is already liked by " + currentUser.getUsername());
+                return true;
+            }
+        }
+        Log.i("Post", "Post has not been liked by " + currentUser.getUsername());
+        return false;
     }
 
 
