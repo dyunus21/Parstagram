@@ -71,6 +71,7 @@ public class FeedActivity extends AppCompatActivity {
             showProgressBar();
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
+        query.include(Post.KEY_LIKED_BY);
         query.setLimit(20);
         query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<Post>() {

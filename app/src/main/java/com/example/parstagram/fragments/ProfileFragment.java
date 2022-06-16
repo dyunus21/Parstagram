@@ -36,10 +36,16 @@ public class ProfileFragment extends Fragment {
     private TextView tvUsername;
     private TextView tvName;
     private ImageView ivProfileImage;
+    private ParseUser user;
     private static final String TAG = "ProfileFragment";
 
     public ProfileFragment() {
         // Required empty public constructor
+        user = ParseUser.getCurrentUser();
+    }
+    public ProfileFragment(ParseUser user) {
+        // Required empty public constructor
+        this.user = user;
     }
 
     @Override
@@ -75,7 +81,9 @@ public class ProfileFragment extends Fragment {
 
     protected void queryPosts(Date time) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.whereEqualTo(Post.KEY_USER,user);
         query.include(Post.KEY_USER);
+        query.include(Post.KEY_LIKED_BY);
         query.setLimit(20);
         if(time != null) {
             Log.i(TAG,"Endless Scroll! on");

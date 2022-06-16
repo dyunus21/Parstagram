@@ -88,6 +88,7 @@ public class PostsFragment extends Fragment {
 
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
+        query.include(Post.KEY_LIKED_BY);
         query.setLimit(20);
         if(time != null) {
             Log.i(TAG,"Endless Scroll! on");

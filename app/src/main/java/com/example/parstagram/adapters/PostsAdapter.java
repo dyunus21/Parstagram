@@ -17,6 +17,7 @@ import com.example.parstagram.activities.PostDetailsActivity;
 import com.example.parstagram.R;
 import com.example.parstagram.databinding.ItemPostBinding;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -81,14 +82,32 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 Glide.with(context).load(image.getUrl()).into(binding.ivImage);
             }
             binding.tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
-            binding.tvLikes.setText(post.getLikeCount() + " likes");
+            List<ParseUser> likedBy = post.getLikedBy();
+            binding.tvLikes.setText(post.getLikeCount());
+            if (isLikedbyCurrentUser()) {
+                binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
+            }
+            else {
+                binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart);
+            }
 
             binding.ibHeart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
-                    post.setLikecount(1);
-                    binding.tvLikes.setText(post.getLikeCount() + " likes");
+
+                    if (isLikedbyCurrentUser()) {
+                        likedBy.remove(ParseUser.getCurrentUser());
+                        post.setLikedBy(likedBy);
+                        binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart);
+                    }
+                    else {
+                        likedBy.add(ParseUser.getCurrentUser());
+                        post.setLikedBy(likedBy);
+                        binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
+                    }
+                    post.setLikecount(likedBy.size());
+                    post.saveInBackground();
+                    binding.tvLikes.setText(post.getLikeCount());
                 }
             });
             binding.ivProfileImage.setOnClickListener(new View.OnClickListener() {
@@ -96,11 +115,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 public void onClick(View v) {
 
                     Log.i(TAG,"Go to profile page");
-//                    AppCompatActivity appCompatActivity = (AppCompatActivity) v.getcontext();
-//                    FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(frameLayout.getId(),fragment);
-//                    fragmentTransaction.commit();
+
                 }
             });
         }
