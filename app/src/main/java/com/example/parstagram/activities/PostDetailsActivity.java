@@ -1,6 +1,5 @@
 package com.example.parstagram.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.example.parstagram.R;
 import com.example.parstagram.adapters.CommentsAdapter;
-
 import com.example.parstagram.databinding.ActivityPostDetailsBinding;
 import com.example.parstagram.fragments.ProfileFragment;
 import com.example.parstagram.models.Comment;
@@ -29,6 +27,7 @@ import java.util.List;
 
 public class PostDetailsActivity extends AppCompatActivity {
     public static final String TAG = "PostDetailsActivity";
+    private final ParseUser CURRENT_USER = ParseUser.getCurrentUser();
     private ActivityPostDetailsBinding binding;
     private Post post;
     private CommentsAdapter commentsAdapter;
@@ -39,45 +38,29 @@ public class PostDetailsActivity extends AppCompatActivity {
         binding = ActivityPostDetailsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
         post = getIntent().getParcelableExtra(Post.class.getSimpleName());
         Log.i(TAG, "In post details activity for post: " + post.getDescription());
 
         binding.tvUsername.setText(post.getUser().getUsername());
         String sourceString = "<b>" + post.getUser().getUsername() + "</b> " + post.getDescription();
         binding.tvCaption.setText(Html.fromHtml(sourceString));
-        Glide.with(this).load(post.getImage().getUrl()).into(binding.ivImage);
         binding.tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
-        if(post.getUser().getParseFile("profileImage") != null)
+        Glide.with(this).load(post.getImage().getUrl()).into(binding.ivImage);
+        if (post.getUser().getParseFile("profileImage") != null)
             Glide.with(this).load(post.getUser().getParseFile("profileImage").getUrl()).circleCrop().into(binding.ivProfileImage);
         List<ParseUser> likedBy = post.getLikedBy();
         binding.tvLikes.setText(post.getLikeCount());
-        if (post.isLikedbyCurrentUser(ParseUser.getCurrentUser())) {
+        if (post.isLikedbyCurrentUser(CURRENT_USER)) {
             binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
-        }
-        else {
+        } else {
             binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart);
         }
 
         binding.ibHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "Current User: " + ParseUser.getCurrentUser().getObjectId());
-                if (post.isLikedbyCurrentUser(ParseUser.getCurrentUser())) {
-                    binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart);
-                }
-                else {
-                    binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
-                }
-                post.likePost(ParseUser.getCurrentUser());
-
-                post.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e!=null)
-                            Log.e(TAG,"Error in liking post" + e);
-                    }
-                });
-                binding.tvLikes.setText(post.getLikeCount());
+                likePost();
             }
         });
         binding.rvComments.setLayoutManager(new LinearLayoutManager(this));
@@ -97,9 +80,27 @@ public class PostDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
                 ProfileFragment profileFragment = new ProfileFragment(post.getUser());
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.rlContainer,profileFragment).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.rlContainer, profileFragment).commit();
             }
         });
+    }
+
+    private void likePost() {
+        if (post.isLikedbyCurrentUser(CURRENT_USER)) {
+            binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart);
+        } else {
+            binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
+        }
+        post.likePost(ParseUser.getCurrentUser());
+
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null)
+                    Log.e(TAG, "Error in liking post" + e);
+            }
+        });
+        binding.tvLikes.setText(post.getLikeCount());
     }
 
     @Override
@@ -110,13 +111,13 @@ public class PostDetailsActivity extends AppCompatActivity {
 
     private void refreshComments() {
         ParseQuery<Comment> query = ParseQuery.getQuery("Comment");
-        query.whereEqualTo(Comment.KEY_POST,post);
+        query.whereEqualTo(Comment.KEY_POST, post);
         query.orderByDescending(Comment.KEY_CREATED_AT);
         query.include(Comment.KEY_AUTHOR);
         query.findInBackground(new FindCallback<Comment>() {
             @Override
             public void done(List<Comment> objects, ParseException e) {
-                if(e != null) {
+                if (e != null) {
                     Log.e(TAG, "Error in fetching comments");
                     return;
                 }

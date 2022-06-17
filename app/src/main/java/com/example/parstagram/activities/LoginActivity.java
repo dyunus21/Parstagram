@@ -1,17 +1,15 @@
 package com.example.parstagram.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.parstagram.R;
+import com.example.parstagram.databinding.ActivityLoginBinding;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -19,65 +17,59 @@ import com.parse.ParseUser;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-    private EditText etUsername;
-    private EditText etPassword;
-    private Button btnLogin;
-    private TextView btnSignup;
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
         setContentView(R.layout.activity_login);
 
-        if(ParseUser.getCurrentUser() != null) {
+        if (ParseUser.getCurrentUser() != null) {
             goMainActivity();
         }
-
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG,"onClick Login!");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                loginUser(username, password);
+                Log.i(TAG, "onClick Login!");
+                loginUser();
             }
         });
-        btnSignup = findViewById(R.id.tvSignup);
-        btnSignup.setOnClickListener(new View.OnClickListener() {
+        binding.tvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goRegister();
             }
         });
     }
-    private void loginUser(String username, String password) {
-        Log.i(TAG, "Attempting to login user");
 
+    private void loginUser() {
+        Log.i(TAG, "Attempting to login user");
+        String username = binding.etUsername.getText().toString();
+        String password = binding.etPassword.getText().toString();
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if(e!=null) {
-                    Log.e(TAG, "Error with login",e);
+                if (e != null) {
+                    Log.e(TAG, "Error with login", e);
                     return;
                 }
                 goMainActivity();
-                Toast.makeText(LoginActivity.this,"Login Successfully!", Toast.LENGTH_SHORT);
+                Toast.makeText(LoginActivity.this, "Login Successfully!", Toast.LENGTH_SHORT);
             }
         });
     }
 
     private void goMainActivity() {
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void goRegister() {
-        Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(intent);
         finish();
     }

@@ -10,17 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.parstagram.models.Post;
 import com.example.parstagram.activities.PostDetailsActivity;
 import com.example.parstagram.databinding.ItemCardBinding;
+import com.example.parstagram.models.Post;
 import com.parse.ParseFile;
 
 import java.util.List;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
-    private Context context;
-    private List<Post> posts;
+    private final Context context;
+    private final List<Post> posts;
     private ItemCardBinding item_binding;
 
     public ProfileAdapter(Context context, List<Post> posts) {
@@ -31,7 +31,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        item_binding = ItemCardBinding.inflate(LayoutInflater.from(context),parent,false);
+        item_binding = ItemCardBinding.inflate(LayoutInflater.from(context), parent, false);
         return new ViewHolder(item_binding);
     }
 
@@ -56,8 +56,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        private ItemCardBinding binding;
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final ItemCardBinding binding;
         private Post currentPost;
 
         public ViewHolder(@NonNull ItemCardBinding itemView) {
@@ -65,6 +65,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             itemView.getRoot().setOnClickListener(this);
             this.binding = itemView;
         }
+
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, PostDetailsActivity.class);
@@ -75,7 +76,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         public void bind(Post post) {
             currentPost = post;
             ParseFile image = post.getImage();
-            if(image != null) {
+            if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(binding.ivPostImage);
             }
         }

@@ -50,28 +50,25 @@ import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
+    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private static final String TAG = "ProfileFragment";
+    private final ParseUser user;
+    public String photoFileName = "photo.jpg";
     protected ProfileAdapter adapter;
     protected List<Post> allPosts;
+    File photoFile;
     private RecyclerView rvPosts;
     private TextView tvUsername;
     private TextView tvName;
     private ImageView ivProfileImage;
-    private final ParseUser user;
     private Button btnEditProfileImage;
     private TextView tvPostCount;
 
-    public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
-    public String photoFileName = "photo.jpg";
-    File photoFile;
-
     public ProfileFragment() {
-        // Required empty public constructor
         user = ParseUser.getCurrentUser();
     }
 
     public ProfileFragment(ParseUser user) {
-        // Required empty public constructor
         this.user = user;
     }
 
@@ -103,7 +100,6 @@ public class ProfileFragment extends Fragment {
         Log.i(TAG, "Name: " + user.getString("name"));
         tvName.setText(user.getString("name"));
         ivProfileImage = view.findViewById(R.id.ivProfileImage);
-//        Log.i(TAG, "url: " + user.getParseFile("profileImage").getUrl());
         if (user.getParseFile("profileImage") != null)
             Glide.with(getContext()).load(user.getParseFile("profileImage").getUrl()).circleCrop().into(ivProfileImage);
         btnEditProfileImage = (Button) view.findViewById(R.id.btnEditProfileImage);
@@ -198,11 +194,11 @@ public class ProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
                 photoFile = resizedFile;
-                user.put("profileImage",new ParseFile(photoFile));
+                user.put("profileImage", new ParseFile(photoFile));
                 user.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if (e!=null) {
+                        if (e != null) {
                             Log.e(TAG, "Error in saving profile image!");
                         }
                         ivProfileImage.setImageBitmap(resizedBitmap);

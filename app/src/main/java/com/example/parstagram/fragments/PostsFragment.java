@@ -1,26 +1,22 @@
 package com.example.parstagram.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.example.parstagram.R;
+import com.example.parstagram.adapters.PostsAdapter;
 import com.example.parstagram.models.EndlessRecyclerViewScrollListener;
 import com.example.parstagram.models.Post;
-import com.example.parstagram.adapters.PostsAdapter;
-import com.example.parstagram.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -31,15 +27,14 @@ import java.util.List;
 
 public class PostsFragment extends Fragment {
 
-    private RecyclerView rvPosts;
+    private static final String TAG = "PostsFragment";
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
+    private RecyclerView rvPosts;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
-    private static final String TAG = "PostsFragment";
 
     public PostsFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -90,15 +85,15 @@ public class PostsFragment extends Fragment {
         query.include(Post.KEY_USER);
         query.include(Post.KEY_LIKED_BY);
         query.setLimit(20);
-        if(time != null) {
-            Log.i(TAG,"Endless Scroll! on");
+        if (time != null) {
+            Log.i(TAG, "Endless Scroll! on");
             query.whereLessThan(Post.KEY_CREATED_AT, time);
         }
         query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
-                if(e != null) {
+                if (e != null) {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
