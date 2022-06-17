@@ -2,7 +2,7 @@
 
 **Parstagram** is a photo sharing app using Parse as its backend.
 
-Time spent: **X** hours spent in total
+Time spent: **30** hours spent in total
 
 ## User Stories
 
@@ -48,14 +48,15 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Changing toolbar layouts
+2. Implementing instant messages
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![](Parstagram_demo.gif)
+<!-- <img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' /> -->
 
 GIF created with [Kap](https://getkap.co/).
 
@@ -69,6 +70,8 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 ## Notes
 
 Describe any challenges encountered while building the app.
+- I had some difficulty in working with recycler views in adapters. Initially, my posts were duplicating themselves and appearing in non-chronological order, however I realized that I was applying viewbinding on the whole adapter instead of the individual viewholder. 
+- Liking posts was initially not working because User objects have to be compared with the method _hasSameId()_.
 
 ## License
 
