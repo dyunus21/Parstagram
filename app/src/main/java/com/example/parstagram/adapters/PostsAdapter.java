@@ -106,7 +106,25 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, "Current User: " + ParseUser.getCurrentUser().getObjectId());
+<<<<<<< Updated upstream
                     likePost(post);
+=======
+                    if (post.isLikedbyCurrentUser(ParseUser.getCurrentUser())) {
+                        binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart);
+                    } else {
+                        binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart_active);
+                    }
+                    post.likePost(ParseUser.getCurrentUser());
+
+                    post.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null)
+                                Log.e(TAG, "Error in liking post" + e);
+                        }
+                    });
+                    binding.tvLikes.setText(post.getLikeCount());
+>>>>>>> Stashed changes
                 }
             });
             binding.ivProfileImage.setOnClickListener(new View.OnClickListener() {

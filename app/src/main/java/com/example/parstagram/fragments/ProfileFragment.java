@@ -2,13 +2,18 @@ package com.example.parstagram.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +56,10 @@ import java.util.Objects;
 public class ProfileFragment extends Fragment {
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+<<<<<<< Updated upstream
+=======
+    public final static int PICK_PHOTO_CODE = 1046;
+>>>>>>> Stashed changes
     private static final String TAG = "ProfileFragment";
     private final ParseUser user;
     public String photoFileName = "photo.jpg";
@@ -164,35 +173,26 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, 800);
-                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-                File resizedFile = getPhotoFileUri(photoFileName);
-                try {
-                    resizedFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                photoFile = resizeFile(takenImage);
+            } else {
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        } else if ((data != null) && requestCode == PICK_PHOTO_CODE) {
+            Uri photoUri = data.getData();
+            Bitmap selectedImage = loadFromUri(photoUri);
+            photoFile = getPhotoFileUri(getFileName(photoUri));
+            photoFile = resizeFile(selectedImage);
+            user.put("profileImage", photoFile);
+            user.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e!=null)
+                        Log.i(TAG,"Error in saving profile image");
                 }
-                FileOutputStream fos = null;
-                try {
-                    fos = new FileOutputStream(resizedFile);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    fos.write(bytes.toByteArray());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+<<<<<<< Updated upstream
                 photoFile = resizedFile;
                 user.put("profileImage", new ParseFile(photoFile));
                 user.saveInBackground(new SaveCallback() {
@@ -205,13 +205,88 @@ public class ProfileFragment extends Fragment {
                         Log.i(TAG, "Successfully changed profile image!");
                     }
                 });
+=======
+            });
+            Log.i(TAG, "File: " + photoFile.toString());
+        }
+    }
 
-            } else {
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+    public File resizeFile(Bitmap image) {
+        Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(image, 800);
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+        File resizedFile = getPhotoFileUri(photoFileName + "_resized");
+        try {
+            resizedFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(resizedFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.write(bytes.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.i(TAG, "File: " + resizedFile);
+        return resizedFile;
+    }
+>>>>>>> Stashed changes
+
+    @SuppressLint("Range")
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
             }
         }
-
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
+    public Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image = null;
+        try {
+            // check version of Android on device
+            if (Build.VERSION.SDK_INT > 27) {
+                ImageDecoder.Source source = ImageDecoder.createSource(getContext().getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                image = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    public void onPickPhoto(View view) {
+        Log.i(TAG, "onPickPhoto!");
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Log.i(TAG, "start intent for gallery!");
+        startActivityForResult(intent, PICK_PHOTO_CODE);
+    }
+
 
     public File getPhotoFileUri(String fileName) {
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);

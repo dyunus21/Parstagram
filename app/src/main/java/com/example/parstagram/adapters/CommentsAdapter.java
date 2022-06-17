@@ -18,6 +18,10 @@ import java.util.List;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
     private static final String TAG = "CommentsAdapter";
+<<<<<<< Updated upstream
+=======
+    private final Context context;
+>>>>>>> Stashed changes
     public List<Comment> comments;
     private Context context;
     private ItemCommentBinding item_binding;
