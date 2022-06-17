@@ -89,7 +89,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             }
             binding.tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
             if(post.getUser().getParseFile("profileImage") != null)
-                Glide.with(context).load(post.getUser().getParseFile("profileImage").getUrl()).into(binding.ivProfileImage);
+                Glide.with(context).load(post.getUser().getParseFile("profileImage").getUrl()).circleCrop().into(binding.ivProfileImage);
             List<ParseUser> likedBy = post.getLikedBy();
             binding.tvLikes.setText(post.getLikeCount());
             if (post.isLikedbyCurrentUser(ParseUser.getCurrentUser())) {

@@ -9,11 +9,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.parstagram.databinding.ItemCardBinding;
 import com.example.parstagram.databinding.ItemCommentBinding;
 import com.example.parstagram.databinding.ItemPostBinding;
 import com.example.parstagram.models.Comment;
 import com.example.parstagram.models.Post;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +77,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         public void bind(Comment comment) {
             String sourceString = "<b>" + comment.getAuthor().getUsername() + "</b> " + comment.getBody();
             binding.tvBody.setText(Html.fromHtml(sourceString));
+            if(ParseUser.getCurrentUser().getParseFile("profileImage") != null)
+                Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("profileImage").getUrl()).circleCrop().into(binding.ivProfileImage);
         }
 
         @Override

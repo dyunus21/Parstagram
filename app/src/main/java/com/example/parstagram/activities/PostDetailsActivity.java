@@ -48,7 +48,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         Glide.with(this).load(post.getImage().getUrl()).into(binding.ivImage);
         binding.tvTimestamp.setText(Post.calculateTimeAgo(post.getCreatedAt()));
         if(post.getUser().getParseFile("profileImage") != null)
-            Glide.with(this).load(post.getUser().getParseFile("profileImage").getUrl()).into(binding.ivProfileImage);
+            Glide.with(this).load(post.getUser().getParseFile("profileImage").getUrl()).circleCrop().into(binding.ivProfileImage);
         List<ParseUser> likedBy = post.getLikedBy();
         binding.tvLikes.setText(post.getLikeCount());
         if (post.isLikedbyCurrentUser(ParseUser.getCurrentUser())) {

@@ -19,8 +19,8 @@
             android:layout_marginTop="32dp"
             android:text="0"
             android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/tvFollowersCount"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,8 +43,8 @@
             android:layout_marginTop="32dp"
             android:text="0"
             android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/tvPostCount"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -119,11 +119,11 @@
             android:id="@+id/tvPostCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="65dp"
             android:layout_marginTop="32dp"
             android:text="0"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
             app:layout_constraintTop_toTopOf="parent" />
