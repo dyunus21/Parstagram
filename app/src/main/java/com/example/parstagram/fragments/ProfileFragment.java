@@ -56,10 +56,7 @@ import java.util.Objects;
 public class ProfileFragment extends Fragment {
 
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
-<<<<<<< Updated upstream
-=======
     public final static int PICK_PHOTO_CODE = 1046;
->>>>>>> Stashed changes
     private static final String TAG = "ProfileFragment";
     private final ParseUser user;
     public String photoFileName = "photo.jpg";
@@ -185,27 +182,16 @@ public class ProfileFragment extends Fragment {
             Bitmap selectedImage = loadFromUri(photoUri);
             photoFile = getPhotoFileUri(getFileName(photoUri));
             photoFile = resizeFile(selectedImage);
-            user.put("profileImage", photoFile);
+            user.put("profileImage", new ParseFile(photoFile));
             user.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    if(e!=null)
-                        Log.i(TAG,"Error in saving profile image");
-                }
-<<<<<<< Updated upstream
-                photoFile = resizedFile;
-                user.put("profileImage", new ParseFile(photoFile));
-                user.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null) {
-                            Log.e(TAG, "Error in saving profile image!");
-                        }
-                        ivProfileImage.setImageBitmap(resizedBitmap);
-                        Log.i(TAG, "Successfully changed profile image!");
+                    if (e != null) {
+                        Log.e(TAG, "Error in saving profile image!");
                     }
-                });
-=======
+                    ivProfileImage.setImageBitmap(selectedImage);
+                    Log.i(TAG, "Successfully changed profile image!");
+                }
             });
             Log.i(TAG, "File: " + photoFile.toString());
         }
@@ -240,7 +226,6 @@ public class ProfileFragment extends Fragment {
         Log.i(TAG, "File: " + resizedFile);
         return resizedFile;
     }
->>>>>>> Stashed changes
 
     @SuppressLint("Range")
     public String getFileName(Uri uri) {
@@ -264,6 +249,7 @@ public class ProfileFragment extends Fragment {
         }
         return result;
     }
+
     public Bitmap loadFromUri(Uri photoUri) {
         Bitmap image = null;
         try {

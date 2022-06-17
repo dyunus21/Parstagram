@@ -106,9 +106,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, "Current User: " + ParseUser.getCurrentUser().getObjectId());
-<<<<<<< Updated upstream
                     likePost(post);
-=======
                     if (post.isLikedbyCurrentUser(ParseUser.getCurrentUser())) {
                         binding.ibHeart.setBackgroundResource(R.drawable.ufi_heart);
                     } else {
@@ -124,7 +122,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         }
                     });
                     binding.tvLikes.setText(post.getLikeCount());
->>>>>>> Stashed changes
                 }
             });
             binding.ivProfileImage.setOnClickListener(new View.OnClickListener() {

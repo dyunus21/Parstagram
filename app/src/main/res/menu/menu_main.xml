@@ -10,9 +10,8 @@
         app:actionLayout="@layout/action_view_progress" />
     <item
         android:id="@+id/logout"
-        android:title="logout" />
-<!--    <item-->
-<!--        android:id="@+id/instagram_icon"-->
-<!--        android:icon="@drawable/nav_logo_whiteout"-->
-<!--        app:showAsAction="always" />-->
+        android:title="logout"
+        app:showAsAction="always"
+        android:onClick="logoutUser"/>
+
 </menu>

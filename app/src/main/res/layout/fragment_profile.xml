@@ -53,8 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Followers"
-            android:textSize="16sp"
             android:textColor="@color/black"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/tvFollowersCount"
             app:layout_constraintStart_toStartOf="@+id/tvFollowersCount"
             app:layout_constraintTop_toBottomOf="@+id/tvFollowersCount" />
@@ -133,8 +133,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Posts"
-            android:textSize="16sp"
             android:textColor="@color/black"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/tvPostCount"
             app:layout_constraintStart_toStartOf="@+id/tvPostCount"
             app:layout_constraintTop_toBottomOf="@+id/tvPostCount" />

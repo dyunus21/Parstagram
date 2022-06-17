@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <queries>
-
-        <!-- Camera -->
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
@@ -39,7 +37,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.FeedActivity"
-            android:exported="false" /> <!-- android:theme="@style/FeedTheme"/> -->
+            android:exported="false" />
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.fileprovider"
