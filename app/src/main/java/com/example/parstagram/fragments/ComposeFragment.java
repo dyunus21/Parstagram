@@ -25,8 +25,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.parstagram.models.BitmapScaler;
-import com.example.parstagram.models.FeedActivity;
-import com.example.parstagram.activities.LoginActivity;
 import com.example.parstagram.models.Post;
 import com.example.parstagram.R;
 import com.parse.ParseException;

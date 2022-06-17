@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +12,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -83,9 +86,6 @@ public class PostsFragment extends Fragment {
     }
 
     protected void queryPosts(Date time) {
-//        if (miActionProgressItem != null)
-//            showProgressBar();
-
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.include(Post.KEY_LIKED_BY);
@@ -110,10 +110,8 @@ public class PostsFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 rvPosts.scrollToPosition(0);
                 swipeContainer.setRefreshing(false);
-//                hideProgressBar();
             }
         });
     }
-
 
 }

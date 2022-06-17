@@ -11,17 +11,22 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.parstagram.activities.CommentActivity;
 import com.example.parstagram.databinding.ItemPostBinding;
 import com.example.parstagram.fragments.ProfileFragment;
+import com.example.parstagram.models.Comment;
 import com.example.parstagram.models.Post;
 import com.example.parstagram.activities.PostDetailsActivity;
 import com.example.parstagram.R;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -71,6 +76,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Post currentPost;
         public ItemPostBinding binding;
+        private CommentsAdapter commentsAdapter;
 
         public ViewHolder(@NonNull ItemPostBinding itemView) {
             super(itemView.getRoot());
@@ -129,6 +135,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.rlContainer,profileFragment).commit();
                 }
             });
+            binding.rvComments.setLayoutManager(new LinearLayoutManager(context));
+            commentsAdapter = new CommentsAdapter(context);
+            binding.rvComments.setAdapter(commentsAdapter);
+            binding.ibComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CommentActivity.class);
+                    intent.putExtra(Post.class.getSimpleName(), currentPost);
+                    context.startActivity(intent);
+                }
+            });
+            refreshComments();
         }
 
         @Override
@@ -136,6 +154,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             Intent intent = new Intent(context, PostDetailsActivity.class);
             intent.putExtra(Post.class.getSimpleName(), currentPost);
             context.startActivity(intent);
+        }
+
+        private void refreshComments() {
+            ParseQuery<Comment> query = ParseQuery.getQuery("Comment");
+            query.whereEqualTo(Comment.KEY_POST,currentPost);
+            query.orderByDescending(Comment.KEY_CREATED_AT);
+            query.include(Comment.KEY_AUTHOR);
+            query.findInBackground(new FindCallback<Comment>() {
+                @Override
+                public void done(List<Comment> objects, ParseException e) {
+                    if(e != null) {
+                        Log.e(TAG, "Error in fetching comments");
+                        return;
+                    }
+                    commentsAdapter.comments.addAll(objects);
+                    commentsAdapter.notifyDataSetChanged();
+                }
+            });
         }
     }
 

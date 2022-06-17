@@ -79,6 +79,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             binding.tvBody.setText(Html.fromHtml(sourceString));
             if(ParseUser.getCurrentUser().getParseFile("profileImage") != null)
                 Glide.with(context).load(ParseUser.getCurrentUser().getParseFile("profileImage").getUrl()).circleCrop().into(binding.ivProfileImage);
+            binding.tvTimestamp.setText(Comment.calculateTimeAgo(comment.getCreatedAt()));
         }
 
         @Override

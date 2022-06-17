@@ -19,9 +19,9 @@
         <entry key="app/src/main/res/layout/fragment_posts.xml" value="0.17391304347826086" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.39121501543368514" />
         <entry key="app/src/main/res/layout/item_card.xml" value="0.19639434814453127" />
-        <entry key="app/src/main/res/layout/item_comment.xml" value="0.7530746459960938" />
+        <entry key="app/src/main/res/layout/item_comment.xml" value="0.24966888427734377" />
         <entry key="app/src/main/res/layout/item_comments.xml" value="0.26094890510948904" />
-        <entry key="app/src/main/res/layout/item_post.xml" value="0.5444686889648438" />
+        <entry key="app/src/main/res/layout/item_post.xml" value="0.5920700073242189" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.2310893306025752" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.27384615384615385" />
         <entry key="app/src/main/res/xml/fileprovider.xml" value="0.10507246376811594" />

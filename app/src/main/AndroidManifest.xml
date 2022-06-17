@@ -36,7 +36,7 @@
             android:name=".activities.PostDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".models.FeedActivity"
+            android:name=".activities.FeedActivity"
             android:exported="false" /> <!-- android:theme="@style/FeedTheme"/> -->
         <provider
             android:name="androidx.core.content.FileProvider"
