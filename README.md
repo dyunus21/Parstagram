@@ -70,6 +70,8 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 ## Notes
 
 Describe any challenges encountered while building the app.
+- I had some difficulty in working with recycler views in adapters. Initially, my posts were duplicating themselves and appearing in non-chronological order, however I realized that I was applying viewbinding on the whole adapter instead of the individual viewholder. 
+- Liking posts was initially not working because User objects have to be compared with the method _hasSameId()_.
 
 ## License
 
