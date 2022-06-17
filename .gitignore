@@ -14,5 +14,6 @@
 .cxx
 local.properties
 /app/src/main/java/com/example/parstagram/activities/FeedActivity.java
+/app/src/main/res/layout/activity_feed.xml
 
 

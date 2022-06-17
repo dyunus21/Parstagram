@@ -11,4 +11,8 @@
     <item
         android:id="@+id/logout"
         android:title="logout" />
+<!--    <item-->
+<!--        android:id="@+id/instagram_icon"-->
+<!--        android:icon="@drawable/nav_logo_whiteout"-->
+<!--        app:showAsAction="always" />-->
 </menu>

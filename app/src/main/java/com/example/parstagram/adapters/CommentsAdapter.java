@@ -64,13 +64,12 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private Comment comment;
         public ItemCommentBinding binding;
 
         public ViewHolder(@NonNull ItemCommentBinding itemView) {
             super(itemView.getRoot());
-            itemView.getRoot().setOnClickListener(this);
             this.binding = itemView;
         }
 
@@ -82,9 +81,5 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             binding.tvTimestamp.setText(Comment.calculateTimeAgo(comment.getCreatedAt()));
         }
 
-        @Override
-        public void onClick(View v) {
-
-        }
     }
 }
